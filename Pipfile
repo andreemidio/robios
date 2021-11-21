@@ -19,6 +19,10 @@ psycopg2-binary = "*"
 django-extra-fields = "*"
 django-cors-headers = "*"
 django-admin-honeypot = "*"
+drf-extra-fields = "*"
+pillow = "*"
+django-extensions = "*"
+python-decouple = "*"
 
 [dev-packages]
 
