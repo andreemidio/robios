@@ -40,7 +40,6 @@ class EmailUserManager(BaseUserManager):
 
 
 class Usuarios(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome_sobrenome = models.CharField(max_length=255, blank=True, null=True)
     cpf = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(unique=True, max_length=255)
@@ -66,4 +65,5 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
+        db_table='Usuarios'
         ordering = ['-data_criacao']

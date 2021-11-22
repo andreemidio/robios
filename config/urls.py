@@ -49,4 +49,7 @@ urlpatterns = [
     url(r'^docs/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
+    path('api/v1/client/', include('apps.producao.urls', namespace='producao')),
+    path('api/v1/users/', include('apps.usuarios.urls', namespace='usuarios')),
+
 ]

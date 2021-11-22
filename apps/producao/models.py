@@ -6,38 +6,40 @@ from django.db import models
 
 class Producao(models.Model):
     line = models.IntegerField(null=True)
-    datetime_turn = models.DateTimeField()
+    datetime_turn = models.DateTimeField(auto_now_add=True)
     parts_quantity = models.IntegerField()
     area_production = models.FloatField()
     line_stops = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.line} | {self.parts_quantity}"
+        return str(self.id)
 
     def __repr__(self):
-        return f"{self.line} | {self.parts_quantity}"
+        return str(self.id)
 
     class Meta:
         verbose_name = 'Producao'
         verbose_name_plural = 'Producoes'
-        ordering = ['-id']
+        db_table = 'Producao'
+        # ordering = ['id']
 
 
 class Quantity(models.Model):
-    inicio = models.DateTimeField()
-    fim = models.DateTimeField()
-    producao = models.ForeignKey(Producao, on_delete=models.DO_NOTHING)
+    inicio = models.DateTimeField(null=True)
+    fim = models.DateTimeField(null=True)
+    producao = models.ForeignKey(Producao, on_delete=models.DO_NOTHING, null=True)
 
     def __str__(self):
-        return f"{self.inicio} | {self.fim}"
+        return str(self.id)
 
     def __repr__(self):
-        return f"{self.inicio} | {self.fim}"
+        return str(self.id)
 
     class Meta:
         verbose_name = 'Quantity'
         verbose_name_plural = 'Quantities'
-        ordering = ['-inicio']
+        db_table = 'Quantity'
+        # ordering = ['-inicio']
 
 
 # {
