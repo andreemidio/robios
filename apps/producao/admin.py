@@ -12,5 +12,5 @@ class ProducaoProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Quantity)
 class QuantityProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'inicio', 'fim', 'producao')
-    search_fields = ('id', 'inicio', 'fim', 'producao')
+    list_display = ('id', 'inicio', 'fim')
+    search_fields = ('id', 'inicio', 'fim')

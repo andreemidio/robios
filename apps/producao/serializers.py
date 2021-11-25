@@ -13,19 +13,20 @@ class PostQuantitySerializers(serializers.ModelSerializer):
 
 
 class PostProducaoSerializer(serializers.ModelSerializer):
-    quantity = PostQuantitySerializers(many=True)
+    stops_quantity = PostQuantitySerializers(many=True)
 
     class Meta:
         model = Producao
         fields = '__all__'
 
     def create(self, validated_data):
-        quantity = validated_data.pop('quantity', {})
+        stops_quantity = validated_data.pop('stops_quantity')
 
         producao = Producao.objects.create(**validated_data)
 
-        for q in quantity:
+        for q in stops_quantity:
             quantidade = Quantity.objects.create(**q)
+            quantidade.producao.add(producao)
 
         return validated_data
 

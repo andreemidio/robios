@@ -65,5 +65,5 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
-        db_table='Usuarios'
+        db_table = 'usuarios'
         ordering = ['-data_criacao']

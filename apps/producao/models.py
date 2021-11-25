@@ -3,7 +3,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class Producao(models.Model):
     line = models.IntegerField(null=True)
     datetime_turn = models.DateTimeField(auto_now_add=True)
@@ -20,14 +19,15 @@ class Producao(models.Model):
     class Meta:
         verbose_name = 'Producao'
         verbose_name_plural = 'Producoes'
-        db_table = 'Producao'
+        db_table = 'producao'
         # ordering = ['id']
 
 
 class Quantity(models.Model):
     inicio = models.DateTimeField(null=True)
     fim = models.DateTimeField(null=True)
-    producao = models.ForeignKey(Producao, on_delete=models.DO_NOTHING, null=True)
+    producao = models.ManyToManyField(Producao, null=True)
+
 
     def __str__(self):
         return str(self.id)
@@ -36,11 +36,10 @@ class Quantity(models.Model):
         return str(self.id)
 
     class Meta:
-        verbose_name = 'Quantity'
-        verbose_name_plural = 'Quantities'
-        db_table = 'Quantity'
+        verbose_name = 'quantity'
+        verbose_name_plural = 'quantities'
+        db_table = 'quantity'
         # ordering = ['-inicio']
-
 
 # {
 #   "idProduction": 0,
