@@ -20,15 +20,21 @@ class PostProducaoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        stops_quantity = validated_data.pop('stops_quantity')
+        try:
+            retorno  = validated_data.copy()
 
-        producao = Producao.objects.create(**validated_data)
+            stops_quantity = validated_data.pop('stops_quantity')
 
-        for q in stops_quantity:
-            quantidade = Quantity.objects.create(**q)
-            quantidade.producao.add(producao)
+            producao = Producao.objects.create(**validated_data)
 
-        return validated_data
+            for q in stops_quantity:
+                quantidade = Quantity.objects.create(**q)
+                quantidade.producao.add(producao)
+
+            return retorno
+
+        except Exception as e:
+            raise serializers.ValidationError({'detail': e})
 
 
 class ListProducaoSerializer(serializers.ModelSerializer):
