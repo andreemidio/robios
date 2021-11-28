@@ -1,6 +1,17 @@
 # ooe-backend
 
 
+# Deploy 
+
+```
+docker build --rm -t "madesa-ooe-backend:latest" .
+
+docker run -it -d -p 0.0.0.0:8000:8000 --name madesa-ooe-backend madesa-ooe-backend
+
+```
+
+
+
 
 ## Getting started
 
