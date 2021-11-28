@@ -17,11 +17,11 @@ class PostProducaoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Producao
-        fields = '__all__'
+        fields = ['line', 'parts_quantity', 'area_production', 'line_stops','stops_quantity']
 
     def create(self, validated_data):
         try:
-            retorno  = validated_data.copy()
+            retorno = validated_data.copy()
 
             stops_quantity = validated_data.pop('stops_quantity')
 
