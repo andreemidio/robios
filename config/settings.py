@@ -54,10 +54,11 @@ LOCAL_APPS = [
 
 THIRD_APPS = [
     "rest_framework",
-    "admin_honeypot",
+    # "admin_honeypot",
     "drf_yasg",
     "rest_framework.authtoken",
-
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
@@ -211,3 +212,13 @@ SWAGGER_SETTINGS = {
 #     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
 #     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 # ]
+
+
+CELERY_TIMEZONE = "America/Sao_Paulo"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+# celery -A config worker -l INFO
+# celery -A config beat

@@ -26,7 +26,7 @@ class Producao(models.Model):
 class Quantity(models.Model):
     inicio = models.DateTimeField(null=True)
     fim = models.DateTimeField(null=True)
-    producao = models.ManyToManyField(Producao, null=True)
+    producao = models.ManyToManyField(Producao)
 
 
     def __str__(self):

@@ -23,6 +23,9 @@ drf-extra-fields = "*"
 pillow = "*"
 django-extensions = "*"
 python-decouple = "*"
+celery = {extras = ["redis"], version = "*"}
+django-celery-beat = "*"
+django-celery-results = "*"
 
 [dev-packages]
 
