@@ -60,6 +60,11 @@ services:
     depends_on:
       - web
 
+networks:
+  postgres:
+    driver: bridge
+
+
 volumes:
   postgres_data:
   static_volume:
