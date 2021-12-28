@@ -27,7 +27,7 @@ services:
       - 5432:5432
 
     networks:
-      - postgres
+      - backend
 
 
   pgadmin:
@@ -44,9 +44,8 @@ services:
 
 
     networks:
-      - postgres
-
-
+      - frontend
+      - backend
 
     depends_on:
       - postgres
@@ -63,7 +62,7 @@ services:
       - 1337:80
 
     networks:
-      - postgres
+      - frontend
 
     depends_on:
       - web
@@ -90,7 +89,8 @@ services:
       - 8000:8000
 
     networks:
-      - postgres
+      - frontend
+      - backend
 
     volumes:
       - static_volume:/home/app/web/staticfiles
@@ -102,10 +102,14 @@ services:
 
 
 networks:
-  postgres:
+  backend:
     driver: bridge
-    name : madesa-oee-network
+    name: madesa-oee-network
 
+  frontend:
+    driver: bridge
+    name: proxy
+    external: true
 
 volumes:
   postgres_data:
