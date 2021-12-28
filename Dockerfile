@@ -41,7 +41,7 @@ RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
 COPY docker-entrypoint.sh ./
-RUN chmod u+x docker-entrypoint.sh
+RUN chmod 777 docker-entrypoint.sh
 COPY . .
 
 EXPOSE 8000
