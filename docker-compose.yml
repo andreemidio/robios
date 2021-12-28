@@ -3,6 +3,11 @@ version: '3.8'
 services:
   web:
     container_name: Backend-Madesa
+    environment:
+      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
+      - DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/madesa-ooe-database
+      - ALLOWED_HOSTS=*
+      - DEBUG=False
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,11 +27,12 @@ services:
       - postgres_data:/var/lib/postgresql/data/
 
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=password
-      - APP_DB_USER=parameters
-      - APP_DB_PASS=parameters
-      - APP_DB_NAME=parameters
+
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - APP_DB_USER=postgres
+      - APP_DB_PASS=postgres
+      - APP_DB_NAME=madesa-ooe-database
 
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
