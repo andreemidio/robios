@@ -36,7 +36,7 @@ services:
 
   pgadmin:
     container_name: pgadmin_container
-    image: dpage/pgadmin4
+    image: bitnami/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: getter@getter.com.br
       PGADMIN_DEFAULT_PASSWORD: getter@2022
