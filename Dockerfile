@@ -40,7 +40,7 @@ RUN pip install -U pip \
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
-
+RUN chmod u+x docker-entrypoint.sh
 COPY . .
 
 EXPOSE 8000
