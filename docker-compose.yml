@@ -27,7 +27,8 @@ services:
       - 5432:5432
 
     networks:
-      - backend
+      backend:
+        - ipv4_address: 192.168.0.3
 
 
   pgadmin:
@@ -44,8 +45,9 @@ services:
 
 
     networks:
-      - frontend
-      - backend
+      frontend
+      backend:
+          - ipv4_address: 192.168.0.2
 
     depends_on:
       - postgres
@@ -72,7 +74,7 @@ services:
     container_name: Backend-Madesa
     environment:
       - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@192.168.16.2:5432/postgres
+      - DATABASE_URL=postgres://postgres:postgres@192.168.0.3:5432/postgres
       - ALLOWED_HOSTS=*
       - DEBUG=False
     build:
@@ -89,8 +91,10 @@ services:
       - 8000:8000
 
     networks:
-      - frontend
-      - backend
+      frontend
+      backend:
+          - ipv4_address: 192.168.0.1
+
 
     volumes:
       - static_volume:/home/app/web/staticfiles
@@ -105,6 +109,10 @@ networks:
   backend:
     driver: bridge
     name: madesa-oee-network
+    ipam:
+      config:
+        - subnet: 192.168.0.0/28
+          gateway: 192.168.0.1
 
   frontend:
     driver: bridge
