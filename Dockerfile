@@ -39,9 +39,9 @@ RUN pip install -U pip \
 # Create and switch to a new user
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
-RUN chmod 755 /appuser
 USER appuser
 RUN mkdir -p /home/appuser/static
+RUN chmod 755 /home/appuser/static
 #COPY docker-entrypoint.sh ./home/appuser
 
 
