@@ -41,7 +41,7 @@ RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
 RUN mkdir -p /home/appuser/static
-RUN chmod 755 /home/appuser/static
+RUN chmod 777 /home/appuser/static
 #COPY docker-entrypoint.sh ./home/appuser
 
 
