@@ -6,7 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: sh -c "python manage.py migrate"
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -14,6 +13,8 @@ services:
       - 8000
     depends_on:
       - postgres
+
+    command: sh -c "python manage.py migrate"
 
   postgres:
     container_name: PostgreSQL-Madesa
