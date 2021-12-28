@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import logging
 import os
 import os
 from functools import partial
@@ -223,6 +223,8 @@ CELERY_RESULT_BACKEND = 'django-db'
 # celery -A config worker -l INFO
 # celery -A config beat
 
+
+import logging.config
 
 # Logging Configuration
 
