@@ -37,8 +37,9 @@ RUN pip install -U pip \
  && pipenv install --system --deploy --ignore-pipfile --skip-lock
 
 # Create and switch to a new user
-RUN useradd --create-home -D appuser
+RUN useradd --create-home appuser
 WORKDIR /home/appuser
+RUN chmod 755 /appuser
 USER appuser
 RUN mkdir -p /home/appuser/static
 #COPY docker-entrypoint.sh ./home/appuser
