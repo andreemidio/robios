@@ -48,8 +48,6 @@ services:
       backend:
         - ipv4_address: 192.168.0.2
 
-      frontend:
-
     depends_on:
       - postgres
     restart: unless-stopped
@@ -92,7 +90,6 @@ services:
       - 8000:8000
 
     networks:
-      frontend:
       backend:
           - ipv4_address: 192.168.0.1
 
