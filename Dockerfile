@@ -40,6 +40,7 @@ RUN pip install -U pip \
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
+COPY docker-entrypoint.sh ./
 RUN chmod u+x docker-entrypoint.sh
 COPY . .
 
