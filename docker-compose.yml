@@ -32,7 +32,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - APP_DB_USER=postgres
       - APP_DB_PASS=postgres
-      - APP_DB_NAME=madesa-ooe-database
+      - APP_DB_NAME=postgres
 
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
