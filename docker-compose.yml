@@ -17,8 +17,8 @@ services:
     depends_on:
       - postgres
 
-    networks:
-      - postgres
+#    networks:
+#      - postgres
 
 
   postgres:
@@ -44,8 +44,8 @@ services:
     ports:
       - 5432:5432
 
-    networks:
-      - postgres
+#    networks:
+#      - postgres
 
 
   pgadmin:
@@ -59,8 +59,8 @@ services:
       - pgadmin:/var/lib/pgadmin
     ports:
       - "${PGADMIN_PORT:-5050}:80"
-    networks:
-      - postgres
+#    networks:
+#      - postgres
     depends_on:
       - postgres
     restart: unless-stopped
@@ -75,8 +75,8 @@ services:
     ports:
       - 1337:80
 
-    networks:
-      - postgres
+#    networks:
+#      - postgres
 
     depends_on:
       - web
