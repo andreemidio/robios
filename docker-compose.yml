@@ -5,7 +5,7 @@ services:
     container_name: Backend-Madesa
     environment:
       - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/madesa-ooe-database
+      - DATABASE_URL=postgres://postgres:postgres@172.25.0.2:5432/madesa-ooe-database
       - ALLOWED_HOSTS=*
       - DEBUG=False
     build:
