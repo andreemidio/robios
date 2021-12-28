@@ -81,6 +81,11 @@ services:
       python manage.py collectstatic &&
       gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"
 
+    expose:
+      - 8000
+
+    ports:
+      - 8000:8000
 
     volumes:
       - static_volume:/home/app/web/staticfiles
