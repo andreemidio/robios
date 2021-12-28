@@ -20,8 +20,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
 
     environment:
-      - POSTGRES_USER=madesa
-      - POSTGRES_PASSWORD=madesa
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
       - APP_DB_USER=madesa
       - APP_DB_PASS=madesa
       - APP_DB_NAME=madesa
