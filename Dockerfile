@@ -45,7 +45,9 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["python3", "manage.py", "migrate"]
+#CMD ["python3", "manage.py", "migrate"]
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
 
 CMD ["gunicorn","--worker-class=gevent", "--workers=3","--worker-connections=1000" ,"config.wsgi:application", "--bind=0.0.0.0:8000","--log-level=DEBUG"]
 
