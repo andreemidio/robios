@@ -41,7 +41,7 @@ RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
 #COPY docker-entrypoint.sh ./home/appuser
-RUN chown -R appuser ./docker-entrypoint.sh
+RUN #chown -R appuser ./docker-entrypoint.sh
 COPY . .
 
 EXPOSE 8000
