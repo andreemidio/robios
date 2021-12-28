@@ -37,7 +37,7 @@ RUN pip install -U pip \
  && pipenv install --system --deploy --ignore-pipfile --skip-lock
 
 # Create and switch to a new user
-RUN adduser -D --create-home appuser
+RUN useradd --create-home -D appuser
 WORKDIR /home/appuser
 USER appuser
 RUN mkdir -p /home/appuser/static
