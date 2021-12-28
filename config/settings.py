@@ -59,6 +59,19 @@ THIRD_APPS = [
     "rest_framework.authtoken",
     'django_celery_beat',
     'django_celery_results',
+
+    'health_check',  # required
+    'health_check.db',  # stock Django health checkers
+    'health_check.cache',
+    'health_check.storage',
+    'health_check.contrib.migrations',
+    # 'health_check.contrib.celery',  # requires celery
+    # 'health_check.contrib.celery_ping',  # requires celery
+    # 'health_check.contrib.psutil',  # disk and memory utilization; requires psutil
+    # 'health_check.contrib.s3boto3_storage',  # requires boto3 and S3BotoStorage backend
+    # 'health_check.contrib.rabbitmq',  # requires RabbitMQ broker
+    # 'health_check.contrib.redis',  # requires Redis broker
+    #
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
@@ -255,3 +268,9 @@ logging.config.dictConfig({
         },
     },
 })
+
+
+HEALTH_CHECK = {
+    'DISK_USAGE_MAX': 90,  # percent
+    'MEMORY_MIN': 100,    # in MB
+}
