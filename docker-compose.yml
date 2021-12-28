@@ -45,9 +45,10 @@ services:
 
 
     networks:
-      frontend
       backend:
-          - ipv4_address: 192.168.0.2
+        - ipv4_address: 192.168.0.2
+
+      frontend:
 
     depends_on:
       - postgres
@@ -91,7 +92,7 @@ services:
       - 8000:8000
 
     networks:
-      frontend
+      frontend:
       backend:
           - ipv4_address: 192.168.0.1
 
