@@ -41,7 +41,7 @@ RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
 RUN mkdir -p /home/appuser/static
-RUN chown  appuser /home/appuser/static
+RUN chown appuser /home/appuser/static
 #COPY docker-entrypoint.sh ./home/appuser
 
 
