@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   web:
+    container_name: Backend-Madesa
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,6 +16,7 @@ services:
       - postgres
 
   postgres:
+    container_name: PostgreSQL-Madesa
     image: bitnami/postgresql:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -22,20 +24,26 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-      - APP_DB_USER=madesa
-      - APP_DB_PASS=madesa
-      - APP_DB_NAME=madesa
-
+      - APP_DB_USER=parameters
+      - APP_DB_PASS=parameters
+      - APP_DB_NAME=parameters
 
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
       timeout: 45s
       interval: 10s
       retries: 10
+    restart: always
+
+    ports:
+      - 5432:5432
+
+    networks:
+      - postgres
 
 
   pgadmin:
-    container_name: pgadmin_container
+    container_name: PGAdmin-Madesa
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: getter@getter.com.br
@@ -47,18 +55,26 @@ services:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
       - postgres
+    depends_on:
+      - postgres
     restart: unless-stopped
 
 
   nginx:
+    container_name: NGINX-Madesa
     build: ./nginx
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
       - 1337:80
+
+    networks:
+      - postgres
+
     depends_on:
       - web
+      - postgres
 
 networks:
   postgres:
