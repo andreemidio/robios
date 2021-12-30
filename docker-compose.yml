@@ -102,6 +102,18 @@ services:
       - postgres
 
 
+  grafana:
+    build: .docker/grafana
+    container_name: Dashboard
+    links:
+      - postgres
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    environment:
+      GF_USERS_DEFAULT_THEME: "dark"
+
 
 
 networks:
