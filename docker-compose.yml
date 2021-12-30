@@ -114,6 +114,9 @@ services:
     environment:
       GF_USERS_DEFAULT_THEME: "dark"
 
+    networks:
+      - frontend
+      - backend
 
 
 networks:
