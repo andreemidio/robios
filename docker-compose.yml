@@ -39,6 +39,9 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5438:5432"
+    networks:
+      - frontend
+      - backend
 
   testdata:
     build: ./.docker/testdata
