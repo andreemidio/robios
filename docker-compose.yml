@@ -31,9 +31,9 @@ services:
       - frontend
       - backend
 
-  postgres-second:
+  postgres2:
     image: postgres:latest
-    container_name: PostgreSecundarioNaoUsar
+    container_name: postgres2
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
