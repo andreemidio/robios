@@ -31,6 +31,19 @@ services:
       - frontend
       - backend
 
+  postgres-second:
+    image: postgres:latest
+    container_name: PostgreSecundarioNaoUsar
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5438:5432"
+
+  testdata:
+    build: ./.docker/testdata
+    links:
+      - postgres
 
   pgadmin:
     container_name: PGAdmin-Madesa
