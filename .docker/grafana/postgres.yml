@@ -12,5 +12,6 @@ datasources:
     isDefault: true
     jsonData:
       sslmode: disable
-    version: 1
-    editable: true
+    version: 12
+    editable: false
+
