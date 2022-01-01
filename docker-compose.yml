@@ -31,22 +31,6 @@ services:
       - frontend
       - backend
 
-  postgres2:
-    image: postgres:latest
-    container_name: postgres2
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5438:5432"
-    networks:
-      - frontend
-      - backend
-
-  testdata:
-    build: ./.docker/testdata
-    links:
-      - postgres
 
   pgadmin:
     container_name: PGAdmin-Madesa
@@ -100,7 +84,6 @@ services:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
       - ./docker/traefik/traefik.toml:/traefik.toml
-      - ./acme.json:/acme.json
     networks:
       - frontend
 
@@ -124,7 +107,6 @@ services:
       - 8000:8000
 
     networks:
-      - frontend
       - backend
 
 
