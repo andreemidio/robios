@@ -249,6 +249,8 @@ networks:
           gateway: 192.168.0.1
 
   frontend:
+    driver: bridge
+    name: proxy
     external: true
 
 volumes:
