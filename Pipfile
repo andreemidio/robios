@@ -27,6 +27,7 @@ celery = {extras = ["redis"], version = "*"}
 django-celery-beat = "*"
 django-celery-results = "*"
 django-health-check = "*"
+elastic-apm = "*"
 
 [dev-packages]
 

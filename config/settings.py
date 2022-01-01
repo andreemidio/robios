@@ -45,6 +45,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'elasticapm.contrib.django',
 ]
 
 LOCAL_APPS = [
@@ -76,6 +77,13 @@ THIRD_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
+
+ELASTIC_APM = {
+    'SERVICE_NAME': 'oee-backend',
+    'SERVER_URL': '${ELASTIC_APM_SERVER_URL}:${ELASTIC_APM_SERVER_PORT}',
+    'DEBUG': 'True',
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -85,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'elasticapm.contrib.django.middleware.TracingMiddleware',git
 ]
 
 ROOT_URLCONF = 'config.urls'
