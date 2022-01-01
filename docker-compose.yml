@@ -151,7 +151,7 @@ services:
       - "7200:7200"
     depends_on: [ "elasticsearch", "kibana" ]
     volumes:
-      - ./apm-conf/apm-server.yml:/usr/share/apm-server/apm-server.yml
+      - ./.docker/apm-conf/apm-server.yml:/usr/share/apm-server/apm-server.yml
     command: /usr/share/apm-server/apm-server -e -c /usr/share/apm-server/apm-server.yml -E apm-server.host=apm-server:7200 --strict.perms=false
     networks:
       - frontend
@@ -169,8 +169,9 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
-      - ./heartbeat/monitors.d:/usr/share/heartbeat/monitors.d
+
+      - ./.docker/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+      - ./.docker/heartbeat/monitors.d:/usr/share/heartbeat/monitors.d
     command: /usr/share/heartbeat/heartbeat setup -E setup.kibana.host=kibana:5601 /usr/share/heartbeat/heartbeat -e -c /usr/share/heartbeat/heartbeat.yml --strict.perms=false
     networks:
       - frontend
