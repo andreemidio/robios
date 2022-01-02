@@ -79,7 +79,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
 
 ELASTIC_APM = {
-    'SERVICE_NAME': 'oee-backend',
+    'SERVICE_NAME': 'Madesa Backend APM',
     'SERVER_URL': 'http://localhost:7200',
     'DEBUG': 'True',
     'DJANGO_TRANSACTION_NAME_FROM_ROUTE': True,
