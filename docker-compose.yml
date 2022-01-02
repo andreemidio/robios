@@ -199,8 +199,21 @@ services:
       - ./.docker/apm-conf/apm-server.yml:/usr/share/apm-server/apm-server.yml
     command: /usr/share/apm-server/apm-server -e -c /usr/share/apm-server/apm-server.yml -E apm-server.host=apm-server:7200 --strict.perms=false
 
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '2m'
+        max-file: '5'
+
     healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://localhost:7200/docs" ]
+      test: [ "CMD", "curl", "-s", "-f", "http://apm-server:7200/" ]
       retries: 6
 
     networks:
@@ -257,7 +270,7 @@ services:
     # depends_on: ["elasticsearch"]
     restart: on-failure
     healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://localhost:5601/" ]
+      test: [ "CMD", "curl", "-s", "-f", "http://kibana:5601/" ]
       retries: 6
     networks:
       - frontend
