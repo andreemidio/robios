@@ -197,7 +197,8 @@ services:
 
   apm-server:
     container_name: apm-server-container
-    image: store/elastic/apm-server:7.2.1
+#    image: store/elastic/apm-server:7.2.1
+    image: docker.elastic.co/apm/apm-server:${STACK_VERSION:-6.5.0}
     user: apm-server
     ports:
       - "7200:7200"
