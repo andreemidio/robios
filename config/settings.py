@@ -80,7 +80,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
 ELASTIC_APM = {
     'SERVICE_NAME': 'Madesa Backend APM',
-    'SERVER_URL': 'http://127.0.0.1:7200/',
+    'SERVER_URL': 'http://apm-server:7200',
     'DEBUG': 'True',
     'DJANGO_TRANSACTION_NAME_FROM_ROUTE': True,
     'SECRET_TOKEN': 'a7665a60-26d1-43cd-802e-9d4236a4239c'
