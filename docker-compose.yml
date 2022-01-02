@@ -156,6 +156,9 @@ services:
       - "-frontend=/opbeans-frontend"
       - "-db=postgres:"
       - "-cache=redis://redis:6379"
+    networks:
+      - frontend
+      - backend
 
   redis:
     image: redis:4
@@ -169,6 +172,10 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
+
+    networks:
+      - frontend
+      - backend
 
   #  grafana:
   #    build: .docker/grafana
