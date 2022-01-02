@@ -80,8 +80,10 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
 ELASTIC_APM = {
     'SERVICE_NAME': 'oee-backend',
-    'SERVER_URL': '${ELASTIC_APM_SERVER_URL}:${ELASTIC_APM_SERVER_PORT}',
+    'SERVER_URL': 'http://localhost:7200',
     'DEBUG': 'True',
+    'DJANGO_TRANSACTION_NAME_FROM_ROUTE': True,
+    'SECRET_TOKEN': 'a7665a60-26d1-43cd-802e-9d4236a4239c'
 }
 
 MIDDLEWARE = [
@@ -90,6 +92,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'elasticapm.contrib.django.middleware.Catch404Middleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -109,6 +112,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'elasticapm.contrib.django.context_processors.rum_tracing',
             ],
         },
     },
@@ -245,39 +249,44 @@ CELERY_RESULT_BACKEND = 'django-db'
 # celery -A config worker -l INFO
 # celery -A config beat
 
-
-import logging.config
-
-# Logging Configuration
-
-# Clear prev config
-LOGGING_CONFIG = None
-
-# Get loglevel from env
-LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
-
-logging.config.dictConfig({
+LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'formatters': {
-        'console': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
     },
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'console',
+        'elasticapm': {
+            'level': 'WARNING',
+            'class': 'elasticapm.contrib.django.handlers.LoggingHandler',
         },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
     },
     'loggers': {
-        '': {
-            'level': LOGLEVEL,
-            'handlers': ['console',],
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'mysite': {
+            'level': 'WARNING',
+            'handlers': ['elasticapm'],
+            'propagate': False,
+        },
+        # Log errors from the Elastic APM module to the console (recommended)
+        'elasticapm.errors': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
         },
     },
-})
-
+}
 
 HEALTH_CHECK = {
     'DISK_USAGE_MAX': 90,  # percent
