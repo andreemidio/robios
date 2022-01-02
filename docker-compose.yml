@@ -172,7 +172,8 @@ services:
 
       - ./.docker/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
       - ./.docker/heartbeat/monitors.d:/usr/share/heartbeat/monitors.d
-    command: /usr/share/heartbeat/heartbeat setup -E setup.kibana.host=kibana:5601 /usr/share/heartbeat/heartbeat -e -c /usr/share/heartbeat/heartbeat.yml --strict.perms=false
+    command: /usr/share/heartbeat/heartbeat setup -E setup.kibana.host=kibana:5601
+    command: /usr/share/heartbeat/heartbeat -e -c /usr/share/heartbeat/heartbeat.yml --strict.perms=false
     networks:
       - frontend
       - backend
