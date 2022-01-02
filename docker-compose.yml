@@ -154,6 +154,7 @@ services:
     command:
       - "/opbeans-go"
       - "-listen=:opbeans-go:8001"
+      - "-frontend=/opbeans-frontend"
       - "-db=postgres:"
       - "-cache=redis://redis:6379"
     networks:
