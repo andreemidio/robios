@@ -138,6 +138,7 @@ services:
         max-file: '5'
     environment:
       - ELASTIC_APM_SERVER_URL=http://apm-server:7200
+      - ELASTIC_APM_JS_SERVER_URL=http://localhost:7200
       - PGHOST=postgres
       - PGUSER=postgres
       - PGPASSWORD=postgres
@@ -200,11 +201,11 @@ services:
     user: apm-server
     ports:
       - "7200:7200"
+      - "6060:6060"
     depends_on: [ "elasticsearch", "kibana" ]
     volumes:
       - ./.docker/apm-conf/apm-server.yml:/usr/share/apm-server/apm-server.yml
     command: /usr/share/apm-server/apm-server -e -c /usr/share/apm-server/apm-server.yml -E apm-server.host=apm-server:7200 --strict.perms=false
-
     cap_drop:
       - ALL
     cap_add:
