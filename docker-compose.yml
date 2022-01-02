@@ -144,7 +144,7 @@ services:
       - PGPORT=5432
       - PGUSER=postgres
       - PGPASSWORD=postgres
-      - PGDATABASE=postgres
+      - PGDATABASE=opbeans
       - PGSSLMODE=disable
       - ELASTIC_APM_LOG_FILE=stderr
       - ELASTIC_APM_LOG_LEVEL=debug
