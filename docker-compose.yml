@@ -152,7 +152,7 @@ services:
         condition: service_started
     command:
       - "/opbeans-go"
-      - "-listen=:${OPBEANS_GO_PORT:-8001}"
+      - "-listen=:opbeans-go:8001"
       - "-frontend=/opbeans-frontend"
       - "-db=postgres:"
       - "-cache=redis://redis:6379"
