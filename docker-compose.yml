@@ -141,9 +141,10 @@ services:
       - ELASTIC_APM_SERVER_URL=http://apm-server:7200
       - ELASTIC_APM_JS_SERVER_URL=http://localhost:7200
       - PGHOST=postgres
+      - PGPORT= 5432
       - PGUSER=postgres
       - PGPASSWORD=postgres
-      - PGDATABASE=postgres
+      - PGDATABASE=opbeans
       - PGSSLMODE=disable
       - ELASTIC_APM_LOG_FILE=stderr
       - ELASTIC_APM_LOG_LEVEL=debug
