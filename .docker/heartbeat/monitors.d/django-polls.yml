@@ -6,4 +6,4 @@
   tags: ["django"]
   check.response:
     status: 200
-    body: 'polls'
+    body: 'docs'
