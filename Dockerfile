@@ -8,26 +8,26 @@ ENV PYTHONUNBUFFERED 1
 
 #RUN PIPENV_VENV_IN_PROJECT=1
 
-RUN apt-get update && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends \
-    gcc \
-    python3-dev \
-    musl-dev \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    dos2unix \
-    libpq-dev \
-    libmariadb-dev-compat \
-    libmariadb-dev \
-    libsm6 \
-    libxext6 \
-    ffmpeg \
-    libfontconfig1 \
-    libxrender1 \
-    libgl1-mesa-glx \
-    curl \
- && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get upgrade -y \
+# && apt-get install -y --no-install-recommends \
+#    gcc \
+#    python3-dev \
+#    musl-dev \
+#    libsm6 \
+#    libxext6 \
+#    libxrender-dev \
+#    dos2unix \
+#    libpq-dev \
+#    libmariadb-dev-compat \
+#    libmariadb-dev \
+#    libsm6 \
+#    libxext6 \
+#    ffmpeg \
+#    libfontconfig1 \
+#    libxrender1 \
+#    libgl1-mesa-glx \
+#    curl \
+# && rm -rf /var/lib/apt/lists/*
 
 ADD Pipfile .
 

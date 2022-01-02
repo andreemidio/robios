@@ -128,40 +128,6 @@ services:
     depends_on:
       - postgres
 
-  opbeans-go:
-    image: opbeans/opbeans-go:latest
-    ports:
-      - "8001:8000"
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '2m'
-        max-file: '5'
-    environment:
-      - ELASTIC_APM_SERVER_URL=http://apm-server:7200
-      - ELASTIC_APM_JS_SERVER_URL=http://localhost:7200
-      - PGHOST=postgres
-      - PGPORT=5432
-      - PGUSER=postgres
-      - PGPASSWORD=postgres
-      - PGDATABASE=opbeans
-      - PGSSLMODE=disable
-      - ELASTIC_APM_LOG_FILE=stderr
-      - ELASTIC_APM_LOG_LEVEL=debug
-    depends_on:
-      redis:
-        condition: service_healthy
-      postgres:
-        condition: service_started
-    command:
-      - "/opbeans-go"
-      - "-listen=:opbeans-go:8001"
-      - "-frontend=/opbeans-frontend"
-      - "-db=postgres:"
-      - "-cache=redis://redis:6379"
-    networks:
-      - frontend
-      - backend
 
   redis:
     image: redis:4
