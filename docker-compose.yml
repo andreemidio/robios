@@ -250,7 +250,7 @@ services:
 networks:
   backend:
     driver: bridge
-    name: network
+    name: madesa-oee-network
     external: false
     ipam:
       config:
