@@ -108,6 +108,11 @@ services:
     labels:
       - "traefik.enable=true"
 
+    links:
+      - "apm-server:apm-server"
+    healthcheck:
+      test: [ "CMD", "curl", "-s", "-f", "http://localhost:8000/docs" ]
+      retries: 6
 
     ports:
       - 8000:8000
@@ -157,7 +162,7 @@ services:
       - frontend
       - backend
     healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://localhost:7200/polls" ]
+      test: [ "CMD", "curl", "-s", "-f", "http://localhost:7200/docs" ]
       retries: 6
 
   heartbeat:
