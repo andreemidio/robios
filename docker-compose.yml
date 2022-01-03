@@ -111,9 +111,9 @@ services:
 
     links:
       - "apm-server:apm-server"
-    healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://web:8000/docs" ]
-      retries: 6
+#    healthcheck:
+#      test: [ "CMD", "curl", "-s", "-f", "http://web:8000/docs" ]
+#      retries: 6
 
     ports:
       - 8000:8000
