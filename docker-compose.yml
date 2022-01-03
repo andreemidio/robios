@@ -259,7 +259,7 @@ services:
     depends_on: [ "elasticsearch" ]
     restart: on-failure
     healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://grafana:3000/" ]
+      test: [ "CMD", "curl", "-s", "-f", "http://grafana:3000/login" ]
       retries: 6
     networks:
       - frontend
