@@ -240,11 +240,17 @@ services:
 
   grafana:
     container_name: Dashboard
-    image: ".docker/grafana"
+    image: grafana/grafana:latest
     hostname: grafana
     user: root
-    #volumes:
-    #  - grafanadata:/var/lib/grafana
+    volumes:
+      - grafanadata:/var/lib/grafana
+      - .docker/grafana/postgres.yml: /etc/grafana/provisioning/datasources/postgres.yml
+      - .docker/grafana/dashboards.yml: /etc/grafana/provisioning/dashboards/dashboards.yml
+      - .docker/grafana/dashboard.json :/var/lib/grafana/dashboards/dashboard.json
+      - .docker/grafana/grafana.ini: /etc/grafana/grafana.ini
+      - .docker/grafana/defaults.ini: /usr/share/grafana/conf/defaults.ini
+
     environment:
       GF_SERVER_ROOT_URL: http://grafana:3000
       GF_SECURITY_ADMIN_USER: admin
