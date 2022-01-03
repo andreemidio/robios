@@ -240,7 +240,7 @@ services:
 
   grafana:
     container_name: grafana
-    image: .docker/grafana/
+    image: ./.docker/grafana/
     hostname: grafana
     user: root
     volumes:
