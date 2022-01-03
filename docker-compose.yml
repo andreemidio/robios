@@ -240,8 +240,8 @@ services:
 
   grafana:
     container_name: Dashboard
-    hostname: grafana
     image: .docker/grafana
+    hostname: grafana
     user: root
     #volumes:
     #  - grafanadata:/var/lib/grafana
