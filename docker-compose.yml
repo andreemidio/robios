@@ -256,7 +256,7 @@ services:
   grafana:
     container_name: grafana-container
     hostname: grafana
-    image: grafana/grafana:6.5.2
+    image: .docker/grafana
     user: root
     #volumes:
     #  - grafanadata:/var/lib/grafana
