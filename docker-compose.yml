@@ -254,7 +254,8 @@ services:
 
     links:
       - postgres
-    ports: [ '3000:3000' ]
+    ports:
+      - 3002:3000
     depends_on: [ "elasticsearch" ]
     restart: on-failure
     healthcheck:
