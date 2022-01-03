@@ -146,21 +146,6 @@ services:
       - frontend
       - backend
 
-  #  grafana:
-  #    build: .docker/grafana
-  #    container_name: Dashboard
-  #    links:
-  #      - postgres
-  #    expose:
-  #      - 3000
-  #    ports:
-  #      - 3000:3000
-  #    environment:
-  #      GF_USERS_DEFAULT_THEME: "dark"
-  #
-  #    networks:
-  #      - frontend
-  #      - backend
 
 
 
@@ -254,7 +239,7 @@ services:
       - backend
 
   grafana:
-    container_name: grafana-container
+    container_name: Dashboard
     hostname: grafana
     image: .docker/grafana
     user: root
@@ -263,8 +248,11 @@ services:
     environment:
       GF_SERVER_ROOT_URL: http://grafana:3000
       GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: secret
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_DEFAULT_THEME: "dark"
 
+    links:
+      - postgres
     ports: [ '3000:3000' ]
     depends_on: [ "elasticsearch" ]
     restart: on-failure
@@ -274,6 +262,9 @@ services:
     networks:
       - frontend
       - backend
+
+
+
 
 
 networks:
