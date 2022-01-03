@@ -39,13 +39,13 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=config.list)
 # Application definition
 
 DJANGO_APPS = [
+    'elasticapm.contrib.django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'elasticapm.contrib.django',
 ]
 
 LOCAL_APPS = [
@@ -87,6 +87,7 @@ ELASTIC_APM = {
 }
 
 MIDDLEWARE = [
+    'elasticapm.contrib.django.middleware.TracingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -96,7 +97,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'elasticapm.contrib.django.middleware.TracingMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
