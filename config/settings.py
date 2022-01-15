@@ -39,7 +39,6 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=config.list)
 # Application definition
 
 DJANGO_APPS = [
-    'elasticapm.contrib.django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,22 +77,14 @@ THIRD_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
 
-ELASTIC_APM = {
-    'SERVICE_NAME': 'Madesa Backend APM',
-    'SERVER_URL': 'http://apm-server:7200',
-    'DEBUG': 'True',
-    'DJANGO_TRANSACTION_NAME_FROM_ROUTE': True,
-    'SECRET_TOKEN': 'a7665a60-26d1-43cd-802e-9d4236a4239c'
-}
+
 
 MIDDLEWARE = [
-    'elasticapm.contrib.django.middleware.TracingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'elasticapm.contrib.django.middleware.Catch404Middleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -113,7 +104,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'elasticapm.contrib.django.context_processors.rum_tracing',
             ],
         },
     },
@@ -250,46 +240,54 @@ CELERY_RESULT_BACKEND = 'django-db'
 # celery -A config worker -l INFO
 # celery -A config beat
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-    },
-    'handlers': {
-        'elasticapm': {
-            'level': 'WARNING',
-            'class': 'elasticapm.contrib.django.handlers.LoggingHandler',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'mysite': {
-            'level': 'WARNING',
-            'handlers': ['elasticapm'],
-            'propagate': False,
-        },
-        # Log errors from the Elastic APM module to the console (recommended)
-        'elasticapm.errors': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-    },
-}
 
 HEALTH_CHECK = {
     'DISK_USAGE_MAX': 90,  # percent
     'MEMORY_MIN': 100,    # in MB
+}
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        }
+    },
+    'loggers': {
+
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    },
+
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
 }

@@ -1,8 +1,6 @@
 version: '3.8'
 
 services:
-
-
   postgres:
     container_name: PostgreSQL-Madesa
     image: bitnami/postgresql:latest
@@ -15,7 +13,7 @@ services:
 #      - APP_DB_NAME=madesa-database
       - APP_DB_NAME=postgres
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
       timeout: 45s
       interval: 10s
       retries: 10
@@ -32,7 +30,6 @@ services:
       - frontend
       - backend
 
-
   pgadmin:
     container_name: PGAdmin-Madesa
     image: dpage/pgadmin4
@@ -45,79 +42,32 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
 
-
     networks:
       - frontend
       - backend
-
 
     depends_on:
       - postgres
     restart: unless-stopped
 
-
-  #  nginx:
-  #    container_name: NGINX-Madesa
-  #    build: ./nginx
-  #    volumes:
-  #      - static_volume:/home/app/web/staticfiles
-  #      - media_volume:/home/app/web/media
-  #    ports:
-  #      - 1337:80
-  #
-  #    networks:
-  #      - frontend
-  #      - backend
-  #
-  #    depends_on:
-  #      - web
-
-  reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:v2.2
-    # Enables the web UI and tells Traefik to listen to docker
-    container_name: Traefik-Madesa
-    ports:
-      # The HTTP port
-      - 80:80
-      - 443:443
-      - 8008:80
-      - 8081:8080
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./.docker/traefik/traefik.toml:/traefik.toml
-
-    networks:
-      - frontend
-      - backend
-
   web:
     container_name: Backend-Madesa
     environment:
       - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
-#      - DATABASE_URL=postgres://postgres:59f0ef2cf3d41b43564b561a14dec7a8131dd995@madesa-ooe-dev.cq0mi9xlhogh.us-east-1.rds.amazonaws.com:5432/madesa-ooe-database
+      #- DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - DATABASE_URL=postgres://postgres:59f0ef2cf3d41b43564b561a14dec7a8131dd995@madesa-ooe-dev.cq0mi9xlhogh.us-east-1.rds.amazonaws.com:5432/madesa-ooe-database
       - ALLOWED_HOSTS=*
-      - DEBUG=False
+      - DEBUG=True
     build:
       context: .
       dockerfile: Dockerfile
 
     command: sh -c "python manage.py makemigrations && python manage.py migrate &&  gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"
-
-    labels:
-      - "traefik.enable=true"
-
-    links:
-      - "apm-server:apm-server"
-#    healthcheck:
-#      test: [ "CMD", "curl", "-s", "-f", "http://web:8000/docs" ]
-#      retries: 6
-
+    expose:
+     - 8000
     ports:
       - 8000:8000
-
+    
     networks:
       - frontend
       - backend
@@ -127,116 +77,6 @@ services:
       - media_volume:/home/app/web/mediafiles
     depends_on:
       - postgres
-
-
-  redis:
-    image: redis:4
-    ports:
-      - 6379:6379
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '2m'
-        max-file: '5'
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 10s
-
-    networks:
-      - frontend
-      - backend
-
-
-
-
-  apm-server:
-    container_name: apm-server-container
-#    image: store/elastic/apm-server:7.2.1
-    image: docker.elastic.co/apm/apm-server:${STACK_VERSION:-6.5.0}
-    user: apm-server
-    ports:
-      - "7200:7200"
-      - "6060:6060"
-    depends_on: [ "elasticsearch", "kibana" ]
-    volumes:
-      - ./.docker/apm-conf/apm-server.yml:/usr/share/apm-server/apm-server.yml
-    command: /usr/share/apm-server/apm-server -e -c /usr/share/apm-server/apm-server.yml -E apm-server.host=apm-server:7200 --strict.perms=false
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - DAC_OVERRIDE
-      - SETGID
-      - SETUID
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '2m'
-        max-file: '20'
-
-    healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://apm-server:7200/" ]
-      retries: 6
-
-    networks:
-      - frontend
-      - backend
-
-  heartbeat:
-    container_name: heartbeat-container
-    image: store/elastic/heartbeat:7.2.1
-    user: heartbeat
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-
-      - ./.docker/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
-      - ./.docker/heartbeat/monitors.d:/usr/share/heartbeat/monitors.d
-    command: /usr/share/heartbeat/heartbeat setup -E setup.kibana.host=kibana:5601
-    command: /usr/share/heartbeat/heartbeat -e -c /usr/share/heartbeat/heartbeat.yml --strict.perms=false
-    networks:
-      - frontend
-      - backend
-
-  elasticsearch:
-    container_name: elasticsearch-container
-    image: docker.io/elasticsearch:7.2.1
-    environment:
-      discovery.type: single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    healthcheck:
-      test: [ "CMD", "curl","-s" ,"-f", "http://localhost:9200/_cat/health" ]
-    networks:
-      - frontend
-      - backend
-
-  kibana:
-    container_name: kibana-container
-    hostname: kibana
-    image: docker.io/kibana:7.2.1
-    #volumes:
-    #  - ./kibana.yml:/usr/share/kibana/kibana.yml
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-    ports: [ '5601:5601' ]
-    # depends_on: ["elasticsearch"]
-    restart: on-failure
-    healthcheck:
-      test: [ "CMD", "curl", "-s", "-f", "http://kibana:5601/" ]
-      retries: 6
-    networks:
-      - frontend
-      - backend
 
   grafana:
     container_name: grafana
@@ -255,15 +95,16 @@ services:
     links:
       - postgres
     ports:
-      - 3002:3000
-    depends_on: [ "elasticsearch" ]
+      - 3000:3000
     restart: on-failure
     healthcheck:
       test: [ "CMD", "curl", "-s", "-f", "http://grafana:3000/login" ]
       retries: 6
+
     networks:
       - frontend
       - backend
+
 
 
 
