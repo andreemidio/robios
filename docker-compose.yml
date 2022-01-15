@@ -61,7 +61,7 @@ services:
      - 8000
     ports:
       - 8000:8000
-    
+
 
 
     volumes:
@@ -93,7 +93,25 @@ services:
       test: [ "CMD", "curl", "-s", "-f", "http://grafana:3000/login" ]
       retries: 6
 
-
+  redis:
+    image: redis:alpine
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A config worker -l INFO
+    command: celery -A config beat -l INFO
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+    depends_on:
+      - db
+      - redis
+      - web
 
 
 
