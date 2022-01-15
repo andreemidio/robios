@@ -10,7 +10,6 @@ services:
 
       - APP_DB_USER=postgres
       - APP_DB_PASS=postgres
-#      - APP_DB_NAME=madesa-database
       - APP_DB_NAME=postgres
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
@@ -26,9 +25,7 @@ services:
     ports:
       - 5432:5432
 
-    networks:
-      - frontend
-      - backend
+
 
   pgadmin:
     container_name: PGAdmin-Madesa
@@ -42,9 +39,7 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
 
-    networks:
-      - frontend
-      - backend
+
 
     depends_on:
       - postgres
@@ -54,8 +49,7 @@ services:
     container_name: Backend-Madesa
     environment:
       - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      #- DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
-      - DATABASE_URL=postgres://postgres:59f0ef2cf3d41b43564b561a14dec7a8131dd995@madesa-ooe-dev.cq0mi9xlhogh.us-east-1.rds.amazonaws.com:5432/madesa-ooe-database
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
       - ALLOWED_HOSTS=*
       - DEBUG=True
     build:
@@ -68,9 +62,7 @@ services:
     ports:
       - 8000:8000
     
-    networks:
-      - frontend
-      - backend
+
 
     volumes:
       - static_volume:/home/app/web/staticfiles
@@ -100,10 +92,6 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-s", "-f", "http://grafana:3000/login" ]
       retries: 6
-
-    networks:
-      - frontend
-      - backend
 
 
 
