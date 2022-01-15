@@ -17,9 +17,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Load task modules from all registered Django apps.
 app.autodiscover_tasks()
-app.conf.broker_url = 'redis://localhost:6379/0'
-app.conf.result_backend = 'redis://localhost:6379/0'
-app.conf.broker_transport_options = {'visibility_timeout': 3600}
+
 
 
 @app.task(bind=True)
@@ -29,9 +27,9 @@ def debug_task(self):
 
 app.conf.beat_schedule = {
     # Executes every Monday morning at 7:30 a.m.
-    'add-every-monday-morning': {
+    'robios-callback': {
         'task': 'apps.producao.tasks.add',
-        'schedule': crontab(),
+        'schedule': crontab(minute=3),
     },
 }
 

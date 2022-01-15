@@ -76,9 +76,6 @@ THIRD_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
-
-
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -237,11 +234,11 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # CELERY_RESULT_BACKEND = 'django-db'
 
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
-# celery -A config worker -l INFO
-# celery -A config beat
+# celery -A config worker -l DEBUG
+# celery -A config beat -l DEBUG
 
 
 HEALTH_CHECK = {
