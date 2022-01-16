@@ -102,7 +102,8 @@ services:
       - 5555
     ports:
       - 5555:5555
-
+    volumes:
+      - ./home/appuser:/home/appuser
     environment:
       - DB_HOST=postgres
       - DB_NAME=postgres
@@ -127,7 +128,7 @@ services:
     build:
       context: .
     volumes:
-      - ./app:/app
+      - ./home/appuser:/home/appuser
     command: celery -A config worker -l DEBUG
     environment:
       - DB_HOST=postgres
@@ -150,7 +151,7 @@ services:
     build:
       context: .
     volumes:
-      - ./app:/app
+      - ./home/appuser:/home/appuser
     command: celery -A config beat -l DEBUG
     environment:
       - DB_HOST=postgres
