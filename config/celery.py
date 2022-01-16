@@ -28,7 +28,7 @@ app.conf.beat_schedule = {
     # Executes every Monday morning at 7:30 a.m.
     'robios-callback-message': {
         'task': 'apps.producao.tasks.get_message_robios',
-        'schedule': crontab(minute=1)
+        'schedule': crontab(minute="*/1"),
     }
 
 }

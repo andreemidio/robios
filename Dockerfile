@@ -21,7 +21,8 @@ ADD messaging-2.5.0-py3-none-any.whl /home/appuser
 RUN pip install -U pip \
      && pip install gunicorn \
      && pip install celery \
-     && pip install django-celery-beat
+     && pip install django-celery-beat \
+     && pip install flower
 
 
 RUN pip install -r /home/appuser/requirements.txt
