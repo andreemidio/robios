@@ -18,13 +18,13 @@ ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
 ADD communication-2.1.1-py3-none-any.whl /home/appuser
 ADD messaging-2.5.0-py3-none-any.whl /home/appuser
 
-RUN pip install -U pip
+RUN pip install -U pip \
+     && pip install gunicorn[gevent]
+
 RUN pip install -r /home/appuser/requirements.txt
 RUN  pip install /home/appuser/robios_api-1.0.0-py3-none-any.whl \
     && pip install /home/appuser/communication-2.1.1-py3-none-any.whl \
-    && pip install /home/appuser/messaging-2.5.0-py3-none-any.whl \
-     && pip  install gunicorn[gevent]
-
+    && pip install /home/appuser/messaging-2.5.0-py3-none-any.whl
 
 
 COPY . /home/appuser
