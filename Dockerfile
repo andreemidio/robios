@@ -16,7 +16,8 @@ RUN pip install -U pip \
     && pip install .\robios\robios_api-1.0.0-py3-none-any.whl \
     && pip install .\robios\communication-2.1.1-py3-none-any.whl\
     && pip install .\robios\messaging-2.5.0-py3-none-any.whl \
-    && pip install -r .\requirements.txt
+
+RUN pip install -r requirements.txt
 
 # Create and switch to a new user
 RUN useradd --create-home appuser
