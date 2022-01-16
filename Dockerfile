@@ -9,6 +9,7 @@ ENV PYTHONUNBUFFERED 1
 #RUN PIPENV_VENV_IN_PROJECT=1
 
 ADD requirements.txt .
+ADD robios .
 
 RUN pip install -U pip \
     && pip install gunicorn \
