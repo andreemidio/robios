@@ -15,8 +15,8 @@ RUN chmod -R 777 /home/appuser/static
 
 ADD requirements.txt /home/appuser
 ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
-ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
-ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
+ADD communication-2.1.1-py3-none-any.whl /home/appuser
+ADD messaging-2.5.0-py3-none-any.whl /home/appuser
 
 RUN pip install -U pip
 RUN pip install -r /home/appuser/requirements.txt
