@@ -99,48 +99,49 @@ services:
       - 6379
     ports:
       - 6379:6379
-  celery:
-    restart: always
-    build:
-      context: .
-    command: celery -A config worker -l DEBUG
 
-    environment:
-      - DB_HOST=postgres
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
-      - ALLOWED_HOSTS=*
-      - DEBUG=True
-    depends_on:
-      - postgres
-      - redis
-      - web
-
-  celery-beat:
-    build:
-      context: .
-    command: celery -A config beat -l DEBUG
-
-    environment:
-      - DB_HOST=postgres
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
-      - ALLOWED_HOSTS=*
-      - DEBUG=True
-    depends_on:
-      - postgres
-      - redis
-      - web
+#  celery:
+#    restart: always
+#    build:
+#      context: .
+#    command: celery -A config worker -l DEBUG
+#
+#    environment:
+#      - DB_HOST=postgres
+#      - DB_NAME=postgres
+#      - DB_USER=postgres
+#      - DB_PASS=postgres
+#      - DEBUG=1
+#      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+#      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
+#      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+#      - ALLOWED_HOSTS=*
+#      - DEBUG=True
+#    depends_on:
+#      - postgres
+#      - redis
+#      - web
+#
+#  celery-beat:
+#    build:
+#      context: .
+#    command: celery -A config beat -l DEBUG
+#
+#    environment:
+#      - DB_HOST=postgres
+#      - DB_NAME=postgres
+#      - DB_USER=postgres
+#      - DB_PASS=postgres
+#      - DEBUG=1
+#      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+#      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
+#      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+#      - ALLOWED_HOSTS=*
+#      - DEBUG=True
+#    depends_on:
+#      - postgres
+#      - redis
+#      - web
 
 
 
