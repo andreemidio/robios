@@ -11,9 +11,9 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install -U pip --user \
     && pip install gunicorn --user \
-    && pip install .\robios\robios_api-1.0.0-py3-none-any.whl --user \
-    && pip install .\robios\communication-2.1.1-py3-none-any.whl --user\
-    && pip install .\robios\messaging-2.5.0-py3-none-any.whl --user \
+    && pip install robios_api-1.0.0-py3-none-any.whl --user \
+    && pip install communication-2.1.1-py3-none-any.whl --user\
+    && pip install messaging-2.5.0-py3-none-any.whl --user \
 
 RUN pip install -r requirements.txt --user
 
@@ -23,21 +23,10 @@ WORKDIR /home/appuser
 USER appuser
 RUN mkdir -p /home/appuser/static
 RUN chmod -R 777 /home/appuser/static
-#COPY docker-entrypoint.sh ./home/appuser
 
 
 COPY . .
 
 EXPOSE 8000
 
-#RUN ["chmod", "+x", "./docker-entrypoint.sh"]
-#ENTRYPOINT ["./docker-entrypoint.sh"]
-
-
-
-#CMD ["python3", "manage.py", "migrate"]
-
-#ENTRYPOINT ["./docker-entrypoint.sh"]
-
-#CMD ["gunicorn","--worker-class=gevent", "--workers=3","--worker-connections=1000" ,"config.wsgi:application", "--bind=0.0.0.0:8000","--log-level=DEBUG"]
 
