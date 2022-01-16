@@ -14,14 +14,15 @@ RUN mkdir -p /home/appuser/static
 RUN chmod -R 777 /home/appuser/static
 
 ADD requirements.txt /home/appuser
+ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
+ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
+ADD robios_api-1.0.0-py3-none-any.whl /home/appuser
 
-#RUN pip install -U pip \
-#    && pip install gunicorn --user \
-#    && pip install .\robios_api-1.0.0-py3-none-any.whl --user \
-#    && pip install .\communication-2.1.1-py3-none-any.whl --user\
-#    && pip install .\messaging-2.5.0-py3-none-any.whl --user \
-
+RUN pip install -U pip
 RUN pip install -r /home/appuser/requirements.txt
+RUN  pip install /home/appuser/robios_api-1.0.0-py3-none-any.whl \
+    && pip install /home/appuser/communication-2.1.1-py3-none-any.whl \
+    && pip install /home/appuser/messaging-2.5.0-py3-none-any.whl \
 
 
 
