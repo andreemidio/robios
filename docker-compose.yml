@@ -158,25 +158,6 @@ services:
       - web
 
 
-
-
-
-
-networks:
-  backend:
-    driver: bridge
-    name: madesa-oee-network
-    external: false
-    ipam:
-      config:
-        - subnet: 192.168.0.0/28
-          gateway: 192.168.0.1
-
-  frontend:
-    driver: bridge
-    name: proxy
-    external: true
-
 volumes:
   postgres_data:
     driver: local
