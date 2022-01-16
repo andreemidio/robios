@@ -86,6 +86,7 @@ services:
       retries: 6
 
   redis:
+    container_name: Redis
     image: redis:alpine
     expose:
       - 6379
