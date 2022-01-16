@@ -103,6 +103,7 @@ services:
       - 6379:6379
 
   celery:
+    container_name: Celery Worker
     restart: always
     build:
       context: .
@@ -126,6 +127,7 @@ services:
       - web
 
   celery-beat:
+    container_name: Celery Beat
     build:
       context: .
     command: celery -A config beat -l DEBUG
