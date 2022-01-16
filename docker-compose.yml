@@ -56,9 +56,10 @@ services:
       context: .
       dockerfile: Dockerfile
 
-    command: sh -c "python manage.py makemigrations && python manage.py migrate &&  gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate"
+    #    command: sh -c "python manage.py makemigrations && python manage.py migrate &&  gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"
     expose:
-     - 8000
+      - 8000
     ports:
       - 8000:8000
 
