@@ -19,14 +19,12 @@ ADD communication-2.1.1-py3-none-any.whl /home/appuser
 ADD messaging-2.5.0-py3-none-any.whl /home/appuser
 
 RUN pip install -U pip \
-     && pip install gunicorn \
-     && pip install celery \
-     && pip install django-celery-beat \
-     && pip install flower
-
-
-RUN pip install -r /home/appuser/requirements.txt
-RUN  pip install /home/appuser/robios_api-1.0.0-py3-none-any.whl \
+    && pip install gunicorn \
+    && pip install celery \
+    && pip install django-celery-beat \
+    && pip install flower \
+    && pip install -r /home/appuser/requirements.txt \
+    && pip install /home/appuser/robios_api-1.0.0-py3-none-any.whl \
     && pip install /home/appuser/communication-2.1.1-py3-none-any.whl \
     && pip install /home/appuser/messaging-2.5.0-py3-none-any.whl
 
