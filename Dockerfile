@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 #RUN PIPENV_VENV_IN_PROJECT=1
 
 RUN pip install -U pip \
-    && pip install -r requirements.txt \
+    && pip install -r .\requirements.txt \
     && pip install gunicorn \
     && pip install .\robios\robios_api-1.0.0-py3-none-any.whl \
     && pip install .\robios\communication-2.1.1-py3-none-any.whl\
