@@ -1,3 +1,5 @@
+import logging
+
 from config.celery import app
 
 
@@ -5,3 +7,8 @@ from config.celery import app
 def add():
     z = 16 + 1
     print(z)
+
+
+@app.task
+def get_message_robios():
+    logging.INFO('To começando meu bom')
