@@ -97,6 +97,8 @@ services:
     restart: always
     build:
       context: .
+    volumes:
+      - ./app:/app
     command: celery -A config worker -l DEBUG
     environment:
       - DB_HOST=postgres
@@ -118,6 +120,8 @@ services:
     container_name: Beat
     build:
       context: .
+    volumes:
+      - ./app:/app
     command: celery -A config beat -l DEBUG
     environment:
       - DB_HOST=postgres
