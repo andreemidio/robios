@@ -15,7 +15,7 @@ RUN chmod -R 777 /home/appuser/static
 
 ADD requirements.txt /home/appuser
 
-RUN pip install -U pip \
+#RUN pip install -U pip \
 #    && pip install gunicorn --user \
 #    && pip install .\robios_api-1.0.0-py3-none-any.whl --user \
 #    && pip install .\communication-2.1.1-py3-none-any.whl --user\
