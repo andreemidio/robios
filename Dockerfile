@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 
 #RUN PIPENV_VENV_IN_PROJECT=1
 
+ADD requirements.txt .
 
 RUN pip install -U pip --user \
 #    && pip install gunicorn --user \
