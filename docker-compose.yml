@@ -64,7 +64,7 @@ services:
       - postgres
 
   grafana:
-    container_name: Grafana
+    container_name: grafana
     build: ./.docker/grafana
     hostname: grafana
     user: root
