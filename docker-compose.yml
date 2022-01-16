@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: PostgreSQL-Madesa
+    container_name: PostgreSQL
     image: bitnami/postgresql:latest
     environment:
       - POSTGRES_USER=postgres
@@ -25,7 +25,7 @@ services:
 
 
   pgadmin:
-    container_name: PGAdmin-Madesa
+    container_name: PGAdmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: getter@getter.com.br
@@ -40,7 +40,7 @@ services:
     restart: unless-stopped
 
   web:
-    container_name: Backend-Madesa
+    container_name: Django
     environment:
       - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
@@ -64,7 +64,7 @@ services:
       - postgres
 
   grafana:
-    container_name: grafana
+    container_name: Grafana
     build: ./.docker/grafana
     hostname: grafana
     user: root
@@ -94,7 +94,7 @@ services:
       - 6379:6379
 
   celery:
-    container_name: Celery Worker
+    container_name: Worker
     restart: always
     build:
       context: .
@@ -118,7 +118,7 @@ services:
       - web
 
   celery-beat:
-    container_name: Celery Beat
+    container_name: Beat
     build:
       context: .
     command: celery -A config beat -l DEBUG
