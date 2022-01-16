@@ -139,9 +139,8 @@ services:
       - redis
       - web
 
-
-
   dashboard:
+    container_name: Flower
     build: .
     command:  flower -A core --port=5555 --broker=redis://redis:6379/0
     ports:
