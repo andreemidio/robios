@@ -127,7 +127,7 @@ services:
     volumes:
       - ./home/appuser:/home/appuser
 #    command: celery -A config worker -l DEBUG
-    command: sh -c "celery -A config worker -B -l DEBUG"
+    command: celery -A config worker -B -l DEBUG
     environment:
       - DB_HOST=postgres
       - DB_NAME=postgres
