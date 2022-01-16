@@ -31,6 +31,6 @@ COPY . /home/appuser
 
 EXPOSE 8000
 
-CMD ["gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"]
+#CMD ["gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"]
 
 
