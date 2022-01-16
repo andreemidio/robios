@@ -92,6 +92,32 @@ services:
     ports:
       - 6379:6379
 
+  dashboard:
+    container_name: Flower
+    build:
+      context: .
+    command: flower -A core --port=5555 --broker=redis://redis:6379/0
+    ports:
+      - 5555:5555
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - ALLOWED_HOSTS=*
+      - DEBUG=True
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+      - celery
+
+
   celery:
     container_name: Worker
     restart: always
@@ -139,30 +165,7 @@ services:
       - redis
       - web
 
-  dashboard:
-    container_name: Flower
-    build:
-      context: .
-    command:  flower -A core --port=5555 --broker=redis://redis:6379/0
-    ports:
-      - 5555:5555
-    environment:
-      - DB_HOST=postgres
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
-      - ALLOWED_HOSTS=*
-      - DEBUG=True
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
-    depends_on:
-      - web
-      - redis
-      - celery
+
 
 
 
