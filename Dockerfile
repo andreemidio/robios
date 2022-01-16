@@ -8,7 +8,14 @@ ENV PYTHONUNBUFFERED 1
 
 #RUN PIPENV_VENV_IN_PROJECT=1
 
-ADD requirements.txt .
+# Create and switch to a new user
+RUN useradd --create-home appuser
+WORKDIR /home/appuser
+USER appuser
+RUN mkdir -p /home/appuser/static
+RUN chmod -R 777 /home/appuser/static
+
+ADD requirements.txt /home/appuser
 
 RUN pip install -U pip --user \
 #    && pip install gunicorn --user \
@@ -18,15 +25,9 @@ RUN pip install -U pip --user \
 
 RUN pip install -r .\requirements.txt --user
 
-# Create and switch to a new user
-RUN useradd --create-home appuser
-WORKDIR /home/appuser
-USER appuser
-RUN mkdir -p /home/appuser/static
-RUN chmod -R 777 /home/appuser/static
 
 
-COPY . .
+COPY . /home/appuser
 
 EXPOSE 8000
 
