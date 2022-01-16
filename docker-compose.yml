@@ -139,6 +139,19 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
       - ALLOWED_HOSTS=*
       - DEBUG=True
+
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+
     depends_on:
       - postgres
       - redis
