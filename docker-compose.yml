@@ -64,13 +64,12 @@ services:
       - postgres
 
   grafana:
-    container_name: grafana
+    container_name: Grafana
     build: ./.docker/grafana
     hostname: grafana
     user: root
     volumes:
       - grafanadata:/var/lib/grafana
-      -
     environment:
       GF_SERVER_ROOT_URL: http://grafana:3000
       GF_SECURITY_ADMIN_USER: admin
