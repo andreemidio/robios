@@ -19,7 +19,7 @@ ADD communication-2.1.1-py3-none-any.whl /home/appuser
 ADD messaging-2.5.0-py3-none-any.whl /home/appuser
 
 RUN pip install -U pip \
-     && pip install gunicorn[gevent]
+     && pip install gunicorn
 
 RUN pip install -r /home/appuser/requirements.txt
 RUN  pip install /home/appuser/robios_api-1.0.0-py3-none-any.whl \
@@ -31,6 +31,6 @@ COPY . /home/appuser
 
 EXPOSE 8000
 
-#CMD ["gunicorn --worker-class=gevent --workers=3 --worker-connections=1000 config.wsgi:application --bind=0.0.0.0:8000 --log-level=DEBUG"]
+
 
 
