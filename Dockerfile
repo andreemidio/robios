@@ -9,13 +9,13 @@ ENV PYTHONUNBUFFERED 1
 #RUN PIPENV_VENV_IN_PROJECT=1
 
 
-RUN pip install -U pip \
-    && pip install gunicorn \
-    && pip install .\robios\robios_api-1.0.0-py3-none-any.whl \
-    && pip install .\robios\communication-2.1.1-py3-none-any.whl\
-    && pip install .\robios\messaging-2.5.0-py3-none-any.whl \
+RUN pip install -U pip --user \
+    && pip install gunicorn --user \
+    && pip install .\robios\robios_api-1.0.0-py3-none-any.whl --user \
+    && pip install .\robios\communication-2.1.1-py3-none-any.whl --user\
+    && pip install .\robios\messaging-2.5.0-py3-none-any.whl --user \
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --user
 
 # Create and switch to a new user
 RUN useradd --create-home appuser
