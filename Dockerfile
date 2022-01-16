@@ -23,7 +23,7 @@ RUN pip install -U pip --user \
 #    && pip install .\communication-2.1.1-py3-none-any.whl --user\
 #    && pip install .\messaging-2.5.0-py3-none-any.whl --user \
 
-RUN pip install -r .\requirements.txt --user
+RUN pip install -r /home/appuserrequirements.txt --user
 
 
 
