@@ -93,29 +93,29 @@ services:
     ports:
       - 6379:6379
 
-  flower:
-    container_name: Flower
-    build:
-      context: .
-    command: flower -A core --port=5555
-    expose:
-      - 5555
-    ports:
-      - 5555:5555
-
-    environment:
-      - DB_HOST=postgres
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
-      - ALLOWED_HOSTS=*
-      - DEBUG=True
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+#  flower:
+#    container_name: Flower
+#    build:
+#      context: .
+#    command: flower -A core --port=5555
+#    expose:
+#      - 5555
+#    ports:
+#      - 5555:5555
+#
+#    environment:
+#      - DB_HOST=postgres
+#      - DB_NAME=postgres
+#      - DB_USER=postgres
+#      - DB_PASS=postgres
+#      - DEBUG=1
+#      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+#      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
+#      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+#      - ALLOWED_HOSTS=*
+#      - DEBUG=True
+#      - CELERY_BROKER=redis://redis:6379/0
+#      - CELERY_BACKEND=redis://redis:6379/0
 
 
   celery:
@@ -125,7 +125,7 @@ services:
       context: .
 
 #    command: ["celery -A core worker -l DEBUG"]
-    command: celery -A core worker -l DEBUG
+    command: celery -A config  worker -l INFO
 #    command: [ "celery" ,"-A" ,"config", "worker", "-B" ,"-l" ,"DEBUG" ]
     environment:
       - DB_HOST=postgres
@@ -139,17 +139,26 @@ services:
       - ALLOWED_HOSTS=*
       - DEBUG=True
 
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 50M
-        reservations:
-          cpus: '0.25'
-          memory: 20M
+  celery-beat:
+    container_name: Worker
+    restart: always
+    build:
+      context: .
+
+    #    command: ["celery -A core worker -l DEBUG"]
+    command: celery -A config  beat -l INFO
+    #    command: [ "celery" ,"-A" ,"config", "worker", "-B" ,"-l" ,"DEBUG" ]
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - SECRET_KEY=t6g8a4oga114*9-v1p7y!cac)(j3mby(v@a63h=py_^u+wf9yb
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - ALLOWED_HOSTS=*
+      - DEBUG=True
 
     depends_on:
       - postgres
