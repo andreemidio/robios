@@ -126,7 +126,7 @@ services:
       context: .
     volumes:
       - ./home/appuser:/home/appuser
-    command: ["celery -A config worker -l DEBUG"]
+    command: ["celery -A core worker -l DEBUG"]
 #    command: [ "celery" ,"-A" ,"config", "worker", "-B" ,"-l" ,"DEBUG" ]
     environment:
       - DB_HOST=postgres
