@@ -97,7 +97,7 @@ services:
     container_name: Flower
     build:
       context: .
-    command: ["flower -A config --port=5555"]
+    command: sh -c  ["flower -A config --port=5555"]
     expose:
       - 5555
     ports:
@@ -127,7 +127,7 @@ services:
     volumes:
       - ./home/appuser:/home/appuser
 #    command: ["celery -A core worker -l DEBUG"]
-    command: ["celery -A config worker -l DEBUG"]
+    command: sh -c ["celery -A config worker -l DEBUG"]
 #    command: [ "celery" ,"-A" ,"config", "worker", "-B" ,"-l" ,"DEBUG" ]
     environment:
       - DB_HOST=postgres
