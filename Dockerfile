@@ -6,7 +6,6 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONFAULTHANDLER=1
 
-# Create and switch to a new user
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
@@ -20,14 +19,13 @@ ADD messaging-2.5.0-py3-none-any.whl /home/appuser
 
 RUN pip install -U pip \
     && pip install gunicorn \
-    && pip install celery \
-    && pip install django-celery-beat \
+    && pip install celery==4.2.1 \
+    && pip install django-celery-beat==1.1.1 \
     && pip install flower \
     && pip install -r /home/appuser/requirements.txt \
     && pip install /home/appuser/robios_api-1.0.0-py3-none-any.whl \
     && pip install /home/appuser/communication-2.1.1-py3-none-any.whl \
     && pip install /home/appuser/messaging-2.5.0-py3-none-any.whl
-
 
 COPY . /home/appuser
 

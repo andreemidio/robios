@@ -123,10 +123,7 @@ services:
     restart: always
     build:
       context: .
-
-#    command: ["celery -A core worker -l DEBUG"]
     command: celery -A config  worker -l INFO
-#    command: [ "celery" ,"-A" ,"config", "worker", "-B" ,"-l" ,"DEBUG" ]
     environment:
       - DB_HOST=postgres
       - DB_NAME=postgres
