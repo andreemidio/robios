@@ -102,8 +102,7 @@ services:
       - 5555
     ports:
       - 5555:5555
-    volumes:
-      - ./home/appuser:/home/appuser
+
     environment:
       - DB_HOST=postgres
       - DB_NAME=postgres
@@ -124,8 +123,7 @@ services:
     restart: always
     build:
       context: .
-    volumes:
-      - ./home/appuser:/home/appuser
+
 #    command: ["celery -A core worker -l DEBUG"]
     command: sh -c ["celery -A config worker -l DEBUG"]
 #    command: [ "celery" ,"-A" ,"config", "worker", "-B" ,"-l" ,"DEBUG" ]
