@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from apps.producao.models import Producao, Quantity
+from apps.producao.models import Producao, Quantity, ParadasProducao
 
 
 @admin.register(Producao)
@@ -14,3 +14,9 @@ class ProducaoProfileAdmin(admin.ModelAdmin):
 class QuantityProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'inicio', 'fim')
     search_fields = ('id', 'inicio', 'fim')
+
+
+@admin.register(ParadasProducao)
+class QuantityProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'mensagem', 'datetime')
+    search_fields = ('id', 'mensagem', 'datetime')

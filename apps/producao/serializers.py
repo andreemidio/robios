@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.producao.models import Producao, Quantity
+from apps.producao.models import Producao, Quantity, ParadasProducao
 
 
 class PostQuantitySerializers(serializers.ModelSerializer):
@@ -35,6 +35,12 @@ class PostProducaoSerializer(serializers.ModelSerializer):
 
         except Exception as e:
             raise serializers.ValidationError({'detail': e})
+
+
+class PostParadasProducaoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ParadasProducao
+        fields = ['mensagem']
 
 
 class ListProducaoSerializer(serializers.ModelSerializer):

@@ -54,3 +54,16 @@ class Quantity(models.Model):
 #     }
 #   ],
 # }
+
+
+class ParadasProducao(models.Model):
+    mensagem = models.CharField(max_length=255)
+    datetime = models.DateTimeField(auto_now_add=True)
+
+    def __repr__(self):
+        return self.mensagem
+
+    class Meta:
+        verbose_name = 'parada_producao'
+        verbose_name_plural = 'parada_producao'
+        db_table = 'parada_producao'

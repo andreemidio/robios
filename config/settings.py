@@ -16,6 +16,7 @@ from functools import partial
 from pathlib import Path
 from pathlib import Path
 
+from celery.schedules import crontab
 from dj_database_url import parse as dburl
 from prettyconf import Configuration
 from prettyconf import Configuration
@@ -48,18 +49,18 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    "apps.producao.apps.ProducaoConfig",
+
     "apps.usuarios.apps.UsuariosConfig",
+    "apps.producao.apps.ProducaoConfig",
 ]
 
 THIRD_APPS = [
-    "rest_framework",
-    # "admin_honeypot",
-    "drf_yasg",
+    'rest_framework',
+    'drf_yasg2',
     "rest_framework.authtoken",
     'django_celery_beat',
     'django_celery_results',
-
+    'channels',
     'health_check',  # required
     'health_check.db',  # stock Django health checkers
     'health_check.cache',
@@ -107,6 +108,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -234,74 +236,82 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # CELERY_RESULT_BACKEND = 'django-db'
 
-CELERY_BROKER_URL = "redis://localhost:6379/"
+# CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+
+CELERY_BROKER_URL = "amqp://user:bitnami@localhost:5672/"
 # CELERY_BROKER_URL = "redis://redis:6379"
 # CELERY_RESULT_BACKEND = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/"
 
+
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULE = {
     'robios-callback-message': {
-        'task': 'apps.producao.tasks.get_message_robios',
+        'task': 'apps.producao.tasks.run',
         'schedule': crontab(minute="*/1"),
+        # 'schedule': 1,
     }
 }
+
 # CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 # CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 
 # celery -A config worker -l DEBUG
 # celery -A config beat -l DEBUG
 
+API_KEY = 'f0333579-f3cc-41b4-aa7b-242066f67a42'
+# ROBOT_ADDRESS='robots.humanrobotics.ai'
+ROBOT_ADDRESS = 'localhost'
+ROBOT_ID = 'Test token'
 
 HEALTH_CHECK = {
     'DISK_USAGE_MAX': 90,  # percent
-    'MEMORY_MIN': 100,    # in MB
+    'MEMORY_MIN': 100,  # in MB
 }
-
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-        },
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'debug.log',
-        }
-    },
-    'loggers': {
-
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        }
-    },
-
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
-}
+#
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+#             'style': '{',
+#         },
+#         'simple': {
+#             'format': '{levelname} {message}',
+#             'style': '{',
+#         },
+#     },
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#         },
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'debug.log',
+#         }
+#     },
+#     'loggers': {
+#
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         }
+#     },
+#
+#     'root': {
+#         'handlers': ['console'],
+#         'level': 'DEBUG',
+#     },
+# }
